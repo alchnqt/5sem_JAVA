@@ -49,6 +49,7 @@ public class AccountController {
     }
 
     @PostMapping("/register")
+    @Loggable
     public ResponseEntity<Map<Object, Object>> register(RegistrationForm registrationForm) throws URISyntaxException {
         try
         {
