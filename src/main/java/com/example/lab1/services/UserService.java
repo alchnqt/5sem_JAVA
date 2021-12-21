@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface UserService {
     Optional<User> getByName(String name);
-    void add(User user);
+    void add(User user) throws Exception;
 }

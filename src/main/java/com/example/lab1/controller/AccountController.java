@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -34,8 +35,12 @@ public class AccountController {
     JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public AccountController(UserService usersService) {
+    public AccountController(UserService usersService,
+                             AuthenticationManager authenticationManager,
+                             JwtTokenProvider jwtTokenProvider) {
         this.userRepository = usersService;
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @GetMapping("/login")
@@ -56,6 +61,7 @@ public class AccountController {
             User user = new User();
             user.setUserLogin(registrationForm.getLogin());
             user.setUserPassword(registrationForm.getPassword());
+            user.setAdmin(registrationForm.getRole() == "admin");
             userRepository.add(user);
         }
         catch (Exception e)

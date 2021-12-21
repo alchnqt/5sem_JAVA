@@ -12,7 +12,7 @@ import java.util.UUID;
 @Data
 public class Item {
     @Id
-    private UUID id;
+    private String id;
     private String parsedInfo;
     private Date createdTime;
     private String company;

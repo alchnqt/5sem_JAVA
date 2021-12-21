@@ -19,7 +19,7 @@ public class ItemDTO {
 
     public static Item ConvertToItem(ItemDTO item){
         Item obj = new Item();
-        obj.setId(UUID.randomUUID());
+        obj.setId(UUID.randomUUID().toString());
         obj.setCreatedTime(new Date());
         obj.setName(item.name);
         obj.setDescription(item.description);

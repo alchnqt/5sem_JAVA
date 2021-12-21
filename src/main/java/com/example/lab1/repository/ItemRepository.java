@@ -6,23 +6,16 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.print.DocFlavor;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, UUID> {
-    @Query(value = "SELECT * FROM ITEM WHERE name = ?1 LIMIT 1", nativeQuery = true)
+public interface ItemRepository extends JpaRepository<Item, String> {
+    @Query(value = "SELECT TOP 1 * FROM items WHERE name = ?1", nativeQuery = true)
     Item findByName(String name);
 
-    @Modifying
-    @Query(value = "UPDATE ITEM SET name = ?2, description = ?3, " +
-            "company = ?4, price = ?5, category = ?6 " +
-            "WHERE ITEM.id = ?1", nativeQuery = true)
-    void updateItem(UUID id,
-                    String name,
-                    String description,
-                    String company,
-                    BigDecimal price,
-                    String category);
-
+    @Query(value = "SELECT * FROM items ORDER BY id OFFSET (?1) ROWS FETCH NEXT (?2) ROWS ONLY", nativeQuery = true)
+    List<Item> AllInRange(int from, int to);
 }

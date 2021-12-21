@@ -56,8 +56,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        String cookie = cookieOptional.get().getValue().replace("%20"," ");
-        if (isEmpty(cookie) || !cookie.startsWith("Bearer ")) {
+        /*String cookie = cookieOptional.get().getValue().replace("%20"," ");
+        if (isEmpty(cookie)) {
             chain.doFilter(request, response);
             return;
         }
@@ -67,9 +67,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         if (!jwtTokenUtil.validateToken(token)) {
             chain.doFilter(request, response);
             return;
-        }
+        }*/
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(jwtTokenUtil.getUsername(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(jwtTokenUtil.getUsername(cookieOptional.get().getValue()));
         if (userDetails == null) {
             chain.doFilter(request, response);
             return;

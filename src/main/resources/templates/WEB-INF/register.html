@@ -18,7 +18,10 @@
                 $.ajax({
                     method: $form.attr('method').toUpperCase(),
                     url: $form.attr('action'),
-                    data: $form.serialize()
+                    data: $form.serialize(),
+                    error: function (res){
+                        console.log(res);
+                    }
                 }
                 );
             })
